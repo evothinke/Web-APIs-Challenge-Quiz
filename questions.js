@@ -14,7 +14,7 @@ var questions = [
     // Italy
     {
     theQuestion: "3) What company makes the Xperia model of smartphone?",
-    answer: ["Samsung", "Sony ", "Nokia"],
+    answer: ["Samsung", "Sony", "Nokia"],
     correctAnswer: "Sony" },
     // Sony
     {theQuestion: "4) Which city is home to the Brandenburg Gate?",
@@ -56,135 +56,132 @@ var questions = [
 ];// Questions end here
 
 
-//logic starts here
+    var correctOrIncorrectEl = document.getElementById("correctOrIncorrect");
     var currentQuestion = 0;
+    var countDownEl = document.getElementById("timer");
+    var timeLeft = 100;
+    var correctAnswerCounterEl = document.getElementById("correctAnswerCounter");
+    var incorrectAnswerCounterEl = document.getElementById("incorrectAnswerCounter");
+    var correctAnswerCounter = 0;
+    var incorrectAnswerCounter = 0;
+    let score = 0;
+    
 
-// function startQuiz() {
-  
-//   var bodyOfTheQuiz = document.getElementById("bodyOfTheQuiz")
-//   bodyOfTheQuiz.setAttribute("class", "hide");
+    var quizFinishedEl = document.getElementById("quizFinished");
+    var quizFinishedTitleEl = document.getElementById("quizFinishedTitle");
+    var finalScoreEl = document.getElementById("finalScore");
+    var enterInitialsTextBoxEl = document.getElementById("enterInitialsTextBox");
+    var submit = document.getElementById("submit");
+    
+    // CountDown timer function
+    function countDown(){
+      var timer = setInterval(function(){
+        if(timeLeft <= 0) {
+          clearInterval(timer);
+          countDownEl.innerHTML = "Time's up";
+          quizFinishedEl.style.display = "block";
+          bodyOfTheQuiz.style.display = "none";
+        } else {
+          countDownEl.innerHTML = "Time remaining: " + timeLeft + " seconds";
+        }
+        timeLeft -= 1;
+      }, 1000) // update the timer every second
+      score = timer;
+      finalScoreEl.textContent  = "Your score is: " + score;
+      console.log(score);
+    }
+    
+    
+    
 
-//   bodyOfTheQuiz.removeAttribute("class")
-//   startQuiz.addEventListener('click', function(){
-//       console.log("quiz bytton was clicked")
-//       if (bodyOfTheQuiz.style.display === "block") {
-//           this.contentEditable.style.display = "none"
-//       }
-//           else {
-
-//             bodyOfTheQuiz.style.display = "block";
-//             console.log(bodyOfTheQuiz.style.display)
-//           }
-          
-      
-//       });
-
-  
-// }
-
-
-// function startQuiz() {
-//   var bodyOfTheQuiz = document.getElementById("bodyOfTheQuiz");
-//   bodyOfTheQuiz.classList.add("hide");
-
-//   var startQuizButton = document.getElementById("startQuiz");
-//   startQuizButton.addEventListener("click", function() {
-//     console.log("Quiz button was clicked");
-//     if (bodyOfTheQuiz.style.display === "none") {
-//       bodyOfTheQuiz.style.display = "block";
-//     } else {
-//       bodyOfTheQuiz.style.display = "none";
-//     }
-//   });
-// }
-
-
-// function startQuiz() {
-//   var bodyOfTheQuiz = document.getElementById("bodyOfTheQuiz");
-//   bodyOfTheQuiz.style.display = "none";
-//   //bodyOfTheQuiz.classList.add("hide");
-
-//   var startQuizButton = document.getElementById("startQuiz");
-//    {
-//     console.log("Quiz button was clicked");
-//     if (startQuizButton.addEventListener("click", function()) {
-//       bodyOfTheQuiz.style.display = "block";
-   
-//   });
-// }
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   startQuiz();
-// });
 
 
 function startQuiz() {
   var bodyOfTheQuiz = document.getElementById("bodyOfTheQuiz");
   bodyOfTheQuiz.style.display = "none";
-
+  quizFinishedEl.style.display = "none";
   var startQuizButton = document.getElementById("startQuiz");
   startQuizButton.addEventListener("click", function() {
-    console.log("Quiz button was clicked");
+
+      countDown()
+
     if (bodyOfTheQuiz.style.display === "none") {
       bodyOfTheQuiz.style.display = "block";
       startQuizButton.style.display = "none";
-    } else {
-      bodyOfTheQuiz.style.display = "none";
     }
   });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  startQuiz();
-});
-
-
-
-
-
-
-
+document.addEventListener("DOMContentLoaded", startQuiz);
 
     function displayQuestion() {
       // Clear any previous buttons
       var startQuiz = document.getElementById("startQuiz");
-      
-      
-      
       var answerButtons = document.getElementById("answerButtons");
       answerButtons.innerHTML = "";
-      
-
 
       // Display the current question
       var theQuestion = document.getElementById("theQuestion");
       theQuestion.textContent = questions[currentQuestion].theQuestion;
     
       // Display the answer buttons for the current question
-      var answerArray = questions[currentQuestion].answer;
-      for (var i = 0; i < answerArray.length; i++) {
+        var answerArray = questions[currentQuestion].answer;
+        for (var i = 0; i < answerArray.length; i++) {
         var answerButton = document.createElement("button");
         answerButton.textContent = answerArray[i];
         answerButton.style.cssText = "width: 200px; height: 50px; font-size: 30px; background-color: black; color: white; border: none; margin: 20px; display: block; font-size: 16px; cursor: pointer";
         answerButton.id = "btn-" + i;
         answerButtons.appendChild(answerButton);
 
-     
-        // Add event listener to check if the clicked button is correct
-        answerButton.addEventListener("click", function() {
-          if (this.textContent === questions[currentQuestion].correctAnswer) {
-            alert("Correct!");
-          } else {
-            alert("Incorrect.");
-          }
+          var myCheckBox = document.getElementById("myCheckBox");
+          var cheatModeAnswerChecked = document.getElementById("cheatModeAnswerChecked");
+
+          myCheckBox.addEventListener("change", function() {
+            if (this.checked) {
+              cheatModeAnswerChecked.textContent = questions[currentQuestion].correctAnswer;
+              
+              }
+            });
+            // Add event listener to check if the clicked button is correct
+            answerButton.addEventListener("click", function() {
+              if (this.textContent === questions[currentQuestion].correctAnswer) {
+                correctOrIncorrectEl.textContent = "Correct!";
+                correctAnswerCounter++;
+                console.log("Correct answers: " + correctAnswerCounter);
+                correctAnswerCounterEl.textContent = "Correct answers: " + correctAnswerCounter;
+                setTimeout(function() {
+                  correctOrIncorrectEl.textContent = "";
+                }, 1000); 
+              } else {
+                correctOrIncorrectEl.textContent = "Incorrect!";
+                incorrectAnswerCounter++;
+                incorrectAnswerCounterEl.textContent = "Incorrect answers: " + incorrectAnswerCounter;
+                timeLeft -=10;
+                setTimeout(function() {
+                  correctOrIncorrectEl.textContent = "";
+                }, 1000); 
+              }
     
           // Move on to the next question
           currentQuestion++;
           if (currentQuestion < questions.length) {
             displayQuestion();
+
+            if (myCheckBox.checked) {
+              cheatModeAnswerChecked.textContent = questions[currentQuestion].correctAnswer;
+            } else {
+              cheatModeAnswerChecked.textContent = "";
+            }
+
           } else {
             // End of quiz
             alert("Quiz complete!");
+            //clearInterval(timer);
+            countDownEl.style.display = "none";
+            
+            finalScoreEl.textContent  = "Your score is: " + score;
+            bodyOfTheQuiz.style.display = "none";
+            quizFinishedEl.style.display = "block";
           }
         });
       }
@@ -192,166 +189,3 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Start the quiz
     displayQuestion();
-
-    
-
-
-
-
-
-    // function printBtn() {
-    //     // Loop through the questions
-    //     for (var i = 0; i < questions.length; i++) {
-    //         var question = questions[i];
-            
-    //         // Create a container for the question and append it to the body
-    //         var questionContainer = document.createElement("div");
-    //         questionContainer.style.cssText = "margin-bottom: 20px";
-    //         document.body.appendChild(questionContainer);
-            
-    //         // Create the question element and append it to the container
-    //         var questionElement = document.createElement("div");
-    //         questionElement.textContent = question.theQuestion;
-    //         questionElement.style.cssText = "font-weight: bold";
-    //         questionContainer.appendChild(questionElement);
-            
-    //         // Loop through the answer options for the current question
-    //         for (var j = 0; j < question.answer.length; j++) {
-    //             var answerOption = question.answer[j];
-                
-    //             // Create the answer button element and append it to the container
-    //             var btn = document.createElement("button");
-    //             btn.textContent = answerOption;
-    //             btn.style.cssText = "width: 200px; height: 50px; font-size: 30px; background-color: black; color: white; border: none; margin: 20px; display: block; font-size: 16px; cursor: pointer";
-    //             questionContainer.appendChild(btn);
-    
-    //             // use a closure to capture the current value of btn and question
-    //             (function(btn, question) {
-    //                 btn.addEventListener("click", function() {
-    //                     if (question.correctAnswer == btn.textContent) {
-    //                         alert("Answer is correct!");
-    //                     } else {
-    //                         alert("Answer is incorrect.");
-    //                     }
-    //                 });
-    //             })(btn, question);
-    //         }
-    //     }
-    // }
-    
-
-
-
-
-    // function printBtn() {
-    //     for (var i = 0; i < questions.length; i++) {
-    //         var question = questions[i];
-    //         var answer = question.answer;
-    
-    //         for (var j = 0; j < answer.length; j++) {
-    //             var btn = document.createElement("button");
-    //             btn.textContent = answer[j];
-    //             btn.style.cssText = "width: 200px; height: 50px; font-size: 30px; background-color: black; color: white; border: none; margin: 20px; display: block; font-size: 16px; cursor: pointer";
-    //             btn.id = "btn-" + i + "-" + j; // add an id to each button element
-    //             document.body.appendChild(btn);
-    
-    //             // use a closure to capture the current value of question and answer
-    //             (function(question, answer) {
-    //                 btn.addEventListener("click", function() {
-    //                     if (question.correctAnswer === this.textContent) {
-    //                         alert("Answer is correct");
-    //                     } else {
-    //                         alert("Answer is incorrect");
-    //                     }
-    //                 });
-    //             })(question, answer[j]);
-    //         }
-    //     }
-    // }
-    
-
-
-
-
-    // function printBtn() {
-    //     for (var i = 0; i < questions.length; i++) {
-    //       var question = questions[i];
-    //       var answer = question.answer;
-    //       var correctAnswer = question.correctAnswer;
-    //       var buttonsContainer = document.createElement("div");
-    //       buttonsContainer.style.cssText = "display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;";
-    //       document.body.appendChild(buttonsContainer);
-    //       var questionEl = document.createElement("div");
-    //       questionEl.textContent = question.theQuestion;
-    //       questionEl.style.cssText = "font-size: 20px; font-weight: bold; margin-bottom: 10px;";
-    //       buttonsContainer.appendChild(questionEl);
-    //       for (var j = 0; j < answer.length; j++) {
-    //         var btn = document.createElement("button");
-    //         btn.textContent = answer[j];
-    //         btn.style.cssText = "width: 200px; height: 50px; font-size: 16px; background-color: black; color: white; border: none; margin: 10px; cursor: pointer;";
-    //         btn.id = "btn-" + j;
-    //         buttonsContainer.appendChild(btn);
-    //         (function(btn) {
-    //           btn.addEventListener("click", function() {
-    //             if (correctAnswer === btn.textContent) {
-    //               alert("Your answer is correct!");
-    //             } else {
-    //               alert("Your answer is incorrect.");
-    //             }
-    //           });
-    //         })(btn);
-    //       }
-    //     }
-    //   }
-      
-
-
-
-
-// function printBtn() {
-//     for (var i = 0; i < answer.length; i++) {
-//         var question = questions[i];
-//         var answer = question.answer;
-//         var correctAnswer = question.correctAnswer;
-//         var buttonsContainer = document.createElement("div");
-//         buttonsContainer.style.cssText =  "display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;";
-//         document.body.appendChild(buttonsContainer);
-//         var btn = document.createElement("button");
-//         btn.textContent = answer[i];
-//         btn.style.cssText = "width: 200px; height: 50px; font-size: 30px; background-color: black; color: white; border: none; margin: 20px; display: block; font-size: 16px; cursor: pointer";
-//         btn.id = "btn-" + i; // add an id to each button element
-//         document.body.appendChild(btn);
-// console.log(answer[i])
-//         // use a closure to capture the current value of btn
-//         (function(btn) {
-//             btn.addEventListener("click", function() {
-//                 if (correctAnswer == btn.textContent) {
-//                     alert("answer is correct")
-//                 }
-//                 else alert("answer is incorrect")
-//                 console.log(correctAnswer);
-//                 console.log(btn.id);
-//             });
-//         })(btn);
-//     }
-// }
-
-
-
-
-
-// if(document.getElementById('button').clicked == true)
-// {
-//    alert("button was clicked");
-// }
-
-
-
-
-
-
-//var correctAnswer = document.getElementById("correctAnswer");
-
-
-
-

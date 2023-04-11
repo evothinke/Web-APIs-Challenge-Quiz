@@ -8,12 +8,31 @@
     
 </head>
 <body >
+    
+    
+    <header>
+        <button id="viewHighScores">High Scores will display here</button>
+        <p id="timer"></p>
+    </header>
+    
     <button id="startQuiz">Start Quiz</button>
-
     <div id="bodyOfTheQuiz">   
          <p id="theQuestion"></p>
-        <p id="correctAnswer"></p>
+        <!-- <p id="correctAnswer"></p> -->
         <p id="answerButtons"></p>
+        <p id="correctOrIncorrect" ></p>
+        Cheat mode: <input type="checkbox" id="myCheckBox" >
+        <p id="cheatModeAnswerChecked"></p>
+        <p id="correctAnswerCounter">Correct Answers: </p>
+        <p id="incorrectAnswerCounter">Incorrect Answers:</p>
+    </div>
+
+    <div id="quizFinished">
+        <p id = "quizFinishedTitle">The quiz is over.</p>
+        <p id = "finalScore"></p>
+        <label for = "initialsTitle">Please enter your initials: </label>
+        <input itemid = "enterInitialsTextBox">
+        <input id = "submit" type="submit" value="Submit">
     </div>
     
    
