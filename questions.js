@@ -73,6 +73,7 @@ var questions = [
     var enterInitialsTextBoxEl = document.getElementById("enterInitialsTextBox");
     var submit = document.getElementById("submit");
     
+    
     // CountDown timer function
     function countDown(){
       var timer = setInterval(function(){
@@ -86,9 +87,6 @@ var questions = [
         }
         timeLeft -= 1;
       }, 1000) // update the timer every second
-      score = timer;
-      finalScoreEl.textContent  = "Your score is: " + score;
-      console.log(score);
     }
     
     
@@ -147,7 +145,7 @@ document.addEventListener("DOMContentLoaded", startQuiz);
               if (this.textContent === questions[currentQuestion].correctAnswer) {
                 correctOrIncorrectEl.textContent = "Correct!";
                 correctAnswerCounter++;
-                console.log("Correct answers: " + correctAnswerCounter);
+                //console.log("Correct answers: " + correctAnswerCounter);
                 correctAnswerCounterEl.textContent = "Correct answers: " + correctAnswerCounter;
                 setTimeout(function() {
                   correctOrIncorrectEl.textContent = "";
@@ -161,7 +159,7 @@ document.addEventListener("DOMContentLoaded", startQuiz);
                   correctOrIncorrectEl.textContent = "";
                 }, 1000); 
               }
-    
+          
           // Move on to the next question
           currentQuestion++;
           if (currentQuestion < questions.length) {
@@ -179,13 +177,28 @@ document.addEventListener("DOMContentLoaded", startQuiz);
             //clearInterval(timer);
             countDownEl.style.display = "none";
             
-            finalScoreEl.textContent  = "Your score is: " + score;
             bodyOfTheQuiz.style.display = "none";
             quizFinishedEl.style.display = "block";
           }
+          score = timeLeft;
+          finalScoreEl.textContent  = "Your score is: " + score;
+          
         });
       }
     }
-    
+    var enterInitialsTextBoxEl = document.getElementById("enterInitialsTextBox");
+    submit.addEventListener("click", function(){
+      var initials = enterInitialsTextBoxEl.value;
+      var studentData = {
+        initials: initials, 
+        studentScore: score
+      }
+      localStorage.setItem("studentData", JSON.stringify(studentData));
+      console.log(localStorage.getItem("studentData"))
+      var highscores = document.createElement("div");
+      document.body.appendChild(highscores);
+      highscores = localStorage.getItem("studentData")
+      console.log(highscores);
+    })
     // Start the quiz
     displayQuestion();
