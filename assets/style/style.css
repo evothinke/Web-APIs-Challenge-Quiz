@@ -1,0 +1,83 @@
+#startQuiz  {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+}
+
+#preQuizText {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-top:100px;
+    width: 40%;
+    text-align:center;
+  
+    font-family: 'Lato', sans-serif;
+    font-size: 14px; 
+    line-height: 20px;
+  
+    
+     /* text-justify: inter-word; */
+
+}
+
+#theQuestion{
+    margin-bottom:30px;
+}
+.submit-message {
+    font-size: 20px;
+    color: green;
+    text-align: center;
+  }
+
+#bodyOfTheQuiz {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    text-align:center;
+    margin-top: 100px;
+
+}
+
+#timer {
+    text-align: right;
+    margin-top: -20px;
+
+}
+
+#quizFinished {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    text-align:center;
+}
+#finalScore{
+    color: rgb(255, 85, 0);
+    font-size: 18px;
+}
+#quizFinishedTitle{
+    font-size: 30px;
+}
+
+#highScoresBody {
+
+    text-align: center;
+}
+
+#startQuiz {
+    background-color: rgb(252, 185, 0);
+    font-size: 15px;
+    height: 50px;
+    width: 100px;
+    border: none;
+    color: whiote;
+    color: white;
+    border-radius: 20px;
+
+    
+
+}

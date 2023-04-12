@@ -5,21 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+    <link rel="stylesheet" href="./assets/style/style.css">
 </head>
 <body >
     
     
     <header>
         <button id="viewHighScores">Check High Scores</button>
-        <p id="timer"></p>
+        <div id="timer"></div>
     </header>
-    
+
+    <p id="preQuizText">This is a general knowledge quiz. It has a countdown timer. <br>Each wrong answer will substract 10 seconds as a penalty. <br>
+        In the end, enter your initials. <br>It will be stored in the localStorage under the studentData object along with the score. <br><br>Good Luck!</p>
     <button id="startQuiz">Start Quiz</button>
 
     <div id="bodyOfTheQuiz">   
-         <p id="theQuestion"></p>
-        <p id="answerButtons"></p>
+        <p id="theQuestion"></p>
+        <div id="answerButtons"></div>
         <p id="correctOrIncorrect" ></p>
         Cheat mode: <input type="checkbox" id="myCheckBox" >
         <p id="cheatModeAnswerChecked"></p>
@@ -30,7 +32,7 @@
     <div id="quizFinished">
         <p id = "quizFinishedTitle">The quiz is over.</p>
         <p id = "finalScore"></p>
-        <label for = "initialsTitle">Please enter your initials: </label>
+        <label for = "initialsTitle">Please enter your initials: </label><br><br>
         <input id = "enterInitialsTextBox">
         <input id = "submit" type="submit" value="Submit">
 
@@ -47,6 +49,6 @@
     <div id="viewHighScores"></div>
     <div id="time"></div>
     
-    <script src="./questions.js"></script>
+    <script src="./assets/script.js"></script>
 </body>
 </html>

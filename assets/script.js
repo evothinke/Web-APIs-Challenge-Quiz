@@ -15,7 +15,7 @@ var enterInitialsTextBoxEl = document.getElementById("enterInitialsTextBox");
 var submit = document.getElementById("submit");
 var viewHighScoresBtn = document.getElementById("viewHighScores"); //button
 var studentData; //declaring object to hold student/user data initials and scores.
-
+var preQuizTextEl = document.getElementById("preQuizText");
 
 // Questions
 var questions = [{
@@ -94,6 +94,7 @@ function countDown() {
       countDownEl.innerHTML = "Time's up";
       quizFinishedEl.style.display = "block";
       bodyOfTheQuiz.style.display = "none";
+      
     } else {
       countDownEl.innerHTML = "Time remaining: " + timeLeft + " seconds";
     }
@@ -107,6 +108,8 @@ function startQuiz() {
   quizFinishedEl.style.display = "none";
   var startQuizButton = document.getElementById("startQuiz");
   startQuizButton.addEventListener("click", function () {
+    preQuizTextEl.style.display = "none";
+    countDownEl.style.display = "block";
 
     countDown()
 
@@ -134,7 +137,7 @@ function displayQuestion() {
   for (var i = 0; i < answerArray.length; i++) {
     var answerButton = document.createElement("button");
     answerButton.textContent = answerArray[i];
-    answerButton.style.cssText = "width: 200px; height: 50px; font-size: 30px; background-color: black; color: white; border: none; margin: 20px; display: block; font-size: 16px; cursor: pointer";
+    answerButton.style.cssText = "width: 200px; height: 50px; font-size: 30px; background-color: #d2a402; color: white;border-color: white; border-width: 2px; border-height:2px; border-style: solid; margin-left: auto;margin-right: auto; display: block; font-size: 16px; cursor: pointer";
     answerButton.id = "btn-" + i;
     answerButtons.appendChild(answerButton);
 
@@ -143,28 +146,32 @@ function displayQuestion() {
 
     myCheckBox.addEventListener("change", function () {
       if (this.checked) {
-        cheatModeAnswerChecked.textContent = questions[currentQuestion].correctAnswer;
-
-      }
+        cheatModeAnswerChecked.textContent = questions[currentQuestion].correctAnswer;}
+      else {
+        cheatModeAnswerChecked.textContent = "";
+}
+      
     });
     // Add event listener to check if the clicked button is correct
     answerButton.addEventListener("click", function () {
       if (this.textContent === questions[currentQuestion].correctAnswer) {
         correctOrIncorrectEl.textContent = "Correct!";
+        correctOrIncorrectEl.style.color = "green";
         correctAnswerCounter++;
         //console.log("Correct answers: " + correctAnswerCounter);
         correctAnswerCounterEl.textContent = "Correct answers: " + correctAnswerCounter;
         setTimeout(function () {
           correctOrIncorrectEl.textContent = "";
-        }, 1000);
+        }, 500);
       } else {
         correctOrIncorrectEl.textContent = "Incorrect!";
+        correctOrIncorrectEl.style.color = "red";
         incorrectAnswerCounter++;
         incorrectAnswerCounterEl.textContent = "Incorrect answers: " + incorrectAnswerCounter;
         timeLeft -= 10;
         setTimeout(function () {
           correctOrIncorrectEl.textContent = "";
-        }, 1000);
+        }, 500);
       }
 
       // Move on to the next question
@@ -180,7 +187,7 @@ function displayQuestion() {
 
       } else {
         // End of quiz
-        alert("Quiz complete!");
+        //alert("Quiz complete!");
         //clearInterval(timer);
         countDownEl.style.display = "none";
 
@@ -195,28 +202,28 @@ function displayQuestion() {
 }
 var enterInitialsTextBoxEl = document.getElementById("enterInitialsTextBox");
 
-submit.addEventListener("click", function () {
-
-  var initials = enterInitialsTextBoxEl.value; //attributing the entered Initials to the variable initials
-
-  //creating an object named studentData and populating it with the initials and score
-  studentData = {
-    initials: initials,
-    studentScore: score
-  }
-  //adding the object studentData to the local storage while converting it to string
-  localStorage.setItem("studentData", JSON.stringify(studentData));
-  //adding the object studentData  to the html element highScoresElLbl
-  highScoresElLbl = localStorage.getItem("studentData")
-
-  console.log(localStorage.getItem("studentData"))
-
-})
-
 // create an empty array to store quiz result objects
 var quizResultsArray = [];
 
 submit.addEventListener("click", function () {
+  // Create a new p element
+var submitMessageParagraph = document.createElement("p");
+//create a new css class to style the thank you message later in css
+submitMessageParagraph.classList.add("submit-message");
+// Create a new text node with the desired text
+var submitMessage = document.createTextNode("Your initials and score have been saved. Thanks");
+
+// Append the text node to the p element
+submitMessageParagraph.appendChild(submitMessage);
+
+// Add the p element to the document
+document.body.appendChild(submitMessageParagraph);
+//make it show briefly then disappear
+setTimeout(function () {
+  submitMessageParagraph.textContent = "";
+}, 2000);
+
+
   var initials = enterInitialsTextBoxEl.value;
 
   // create a new quiz result object
@@ -233,14 +240,16 @@ submit.addEventListener("click", function () {
 });
 
 // retrieve the quizResultsArray from localStorage and parse it back to an array
-//var storedQuizResultsArray = JSON.parse(localStorage.getItem("quizResultsArray"));
-
 var storedQuizResultsArray = JSON.parse(localStorage.getItem("quizResultsArray")) || [];
 
 // check if the storedQuizResultsArray is not empty, if not, assign it to quizResultsArray
 if (storedQuizResultsArray.length > 0) {
   quizResultsArray = storedQuizResultsArray;
 }
+
+storedQuizResultsArray.sort(function (a, b) {
+  return b.studentScore - a.studentScore;
+});
 
 // check if the storedQuizResultsArray is null or undefined, if not, assign it to quizResultsArray
 if (storedQuizResultsArray != null && storedQuizResultsArray != undefined) {
@@ -260,23 +269,32 @@ console.log(quizResultsArray)
 
 
 //adding an event listener to the button viewHighScoresBtn
+
+
 viewHighScoresBtn.addEventListener("click", function () {
   var highScoresLbl = document.getElementById("highScoresObject");
   var highScoresBody = document.getElementById("highScoresBody");
+
+
 
   // clear any existing content from highScoresLbl
   highScoresLbl.innerHTML = "";
 
   // iterate over the quizResultsArray and append each item to highScoresLbl
-  for (var i = 0; i < quizResultsArray.length; i++) {
+  for (var i = 0; i < storedQuizResultsArray.length; i++) {
     var itemEl = document.createElement("p");
-    itemEl.textContent = quizResultsArray[i].initials + ": " + quizResultsArray[i].studentScore;
+    itemEl.textContent = storedQuizResultsArray[i].initials + ": " + storedQuizResultsArray[i].studentScore;
+    itemEl.style.cssText = "color: #656568; font-size: 15px; line-height: 30px; background-color: #cccccc; width: 200px; text-align: center; margin-left: auto; margin-right: auto"
     highScoresLbl.appendChild(itemEl);
   }
-
-  highScoresBody.style.display = "block";
+  if (bodyOfTheQuiz.style.display === "block") {
+    highScoresBody.style.display = "none";
+   }
+   if (quizFinishedEl === "block") {
+    highScoresBody.style.display = "block";
+   }
+  //highScoresBody.style.display = "block";
   console.log(highScoresLbl);
 });
-
 // Start the quiz
 displayQuestion();
