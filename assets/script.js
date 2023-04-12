@@ -276,6 +276,9 @@ viewHighScoresBtn.addEventListener("click", function () {
   var highScoresBody = document.getElementById("highScoresBody");
 
 
+  setTimeout(function () {
+    highScoresLbl.textContent = "";
+ }, 2000);
 
   // clear any existing content from highScoresLbl
   highScoresLbl.innerHTML = "";
