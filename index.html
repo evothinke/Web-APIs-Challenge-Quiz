@@ -11,14 +11,14 @@
     
     
     <header>
-        <button id="viewHighScores" onclick="window.location.href='./scores.html';">Check High Scores</button>
+        <button id="viewHighScores">Check High Scores</button>
         <p id="timer"></p>
     </header>
     
     <button id="startQuiz">Start Quiz</button>
+
     <div id="bodyOfTheQuiz">   
          <p id="theQuestion"></p>
-        <!-- <p id="correctAnswer"></p> -->
         <p id="answerButtons"></p>
         <p id="correctOrIncorrect" ></p>
         Cheat mode: <input type="checkbox" id="myCheckBox" >
@@ -33,6 +33,11 @@
         <label for = "initialsTitle">Please enter your initials: </label>
         <input id = "enterInitialsTextBox">
         <input id = "submit" type="submit" value="Submit">
+
+    </div>
+    <div id="highScoresBody">
+
+        <div id="highScoresObject"></div>
     </div>
     
    
