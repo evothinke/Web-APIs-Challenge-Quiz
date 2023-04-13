@@ -5,9 +5,9 @@
 
 
 <h2>The Goal:</h2>
-- Build a timed quiz with multiple choice questions.
-- For each incorrect answer, substract 10 seconds from the countdown timer.
-- At the end of the quiz, ask the user to enter their initials that would be stored in the localStorage memory and display them in descending order based on score.
+- Build a timed quiz with multiple choice questions.<br>
+- For each incorrect answer, substract 10 seconds from the countdown timer.<br>
+- At the end of the quiz, ask the user to enter their initials that would be stored in the localStorage memory and display them in descending order based on score.<br><br>
 
 
 <h2>The Process:</h2>
